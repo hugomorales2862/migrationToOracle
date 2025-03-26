@@ -1,0 +1,3 @@
+alter table cmm_rebajados modify reb_diagnostico varchar2(250);
+alter table aud_cmm_rebajados modify reb_diagnostico varchar2(250);
+alter table aud_cmm_rebajados modify aud_reb_diagnostico varchar2(250);
