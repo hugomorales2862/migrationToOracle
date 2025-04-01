@@ -1,0 +1,22 @@
+URL
+
+http://192.168.24.4:7001/console
+
+
+pass
+weblogic/manager1
+--------------------------------------------
+http://192.168.24.4:7001/mdn-apex001
+
+Workspace INTERNAL
+User ADMIN
+Contraseña Manager1#
+
+
+https://192.168.24.4:5500/em
+system
+manager1
+
+root 
+sys
+oracle

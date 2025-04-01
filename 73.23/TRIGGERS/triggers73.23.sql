@@ -2873,14 +2873,14 @@ create or replace trigger ADMIN.del_cmm_hospitalizados AFTER delete on ADMIN
     for each row
     BEGIN
         
-        insert into ADMIN.aud_cmm_hospitalizados (hos_catalogo,
-    hos_fec_ingreso,hos_diag_ingreso,hos_fec_egreso,hos_diag_egreso,hos_grado,
-    hos_depen,desp_hos_catalogo,desp_hos_fec_ingreso,desp_hos_diag_ingreso,
-    desp_hos_fec_egreso,desp_hos_diag_egreso,desp_hos_grado,desp_hos_depen,
-    accion,usuario,hora)  values (:OLD.hos_catalogo ,:OLD.hos_fec_ingreso 
-    ,:OLD.hos_diag_ingreso ,:OLD.hos_fec_egreso ,:OLD.hos_diag_egreso 
-    ,:OLD.hos_grado ,:OLD.hos_depen ,NULL ,'' ,'' ,'' ,'' ,NULL ,NULL ,
-    'D' ,USER ,SYSTIMESTAMP);
+        insert into ADMIN.aud_cmm_hospitalizados (hos_catalogo,hos_fec_ingreso,hos_diag_ingreso,hos_fec_egreso,
+        hos_diag_egreso,hos_grado,hos_depen,hos_clinica_ingreso,hos_medico_ingreso,hos_clinica_egreso,hos_medico_egreso,
+        hos_tipo_egreso,desp_hos_catalogo,desp_hos_fec_ingreso,desp_hos_diag_ingreso,desp_hos_fec_egreso,desp_hos_diag_egreso,
+        desp_hos_grado,desp_hos_depen,desp_hos_clinica_ingreso,desp_hos_medico_ingreso,desp_hos_clinica_egreso,desp_hos_medico_egreso,
+        desp_hos_tipo_egreso,accion,usuario,hora)
+          values (:OLD.hos_catalogo ,:OLD.hos_fec_ingreso ,:OLD.hos_diag_ingreso ,
+        :OLD.hos_fec_egreso ,:OLD.hos_diag_egreso ,:OLD.hos_grado ,:OLD.hos_depen ,:OLD.hos_clinica_ingreso,:OLD.hos_medico_ingreso,:OLD.hos_clinica_egreso,:OLD.hos_medico_egreso,
+        :OLD.hos_tipo_egreso,NULL ,'' ,'' ,'' ,'' ,NULL ,NULL ,'','','','','','D' ,USER ,SYSTIMESTAMP );  
     END;
     /
 
@@ -2889,33 +2889,31 @@ create or replace trigger ADMIN.ins_cmm_hospitalizados AFTER insert on ADMIN
     for each row
     BEGIN
         
-        insert into ADMIN.aud_cmm_hospitalizados (hos_catalogo,
-    hos_fec_ingreso,hos_diag_ingreso,hos_fec_egreso,hos_diag_egreso,hos_grado,
-    hos_depen,desp_hos_catalogo,desp_hos_fec_ingreso,desp_hos_diag_ingreso,
-    desp_hos_fec_egreso,desp_hos_diag_egreso,desp_hos_grado,desp_hos_depen,
-    accion,usuario,hora)  values (NULL ,'' ,'' ,'' ,'' ,NULL ,NULL ,:NEW.hos_catalogo 
-    ,:NEW.hos_fec_ingreso ,:NEW.hos_diag_ingreso ,:NEW.hos_fec_egreso 
-    ,:NEW.hos_diag_egreso ,:NEW.hos_grado ,:NEW.hos_depen ,'I' ,USER 
-    ,SYSTIMESTAMP);
+        insert into ADMIN.aud_cmm_hospitalizados (hos_catalogo,hos_fec_ingreso,hos_diag_ingreso,hos_fec_egreso,
+        hos_diag_egreso,hos_grado,hos_depen,hos_clinica_ingreso,hos_medico_ingreso,hos_clinica_egreso,hos_medico_egreso,
+        hos_tipo_egreso,desp_hos_catalogo,desp_hos_fec_ingreso,desp_hos_diag_ingreso,desp_hos_fec_egreso,desp_hos_diag_egreso,
+        desp_hos_grado,desp_hos_depen,desp_hos_clinica_ingreso,desp_hos_medico_ingreso,desp_hos_clinica_egreso,desp_hos_medico_egreso,
+        desp_hos_tipo_egreso,accion,usuario,hora)
+          values (NULL ,'' ,'' ,'' ,'' ,NULL ,NULL ,'','','','','',:NEW.hos_catalogo ,:NEW.hos_fec_ingreso ,:NEW.hos_diag_ingreso ,:NEW.hos_fec_egreso ,:NEW.hos_diag_egreso ,:NEW.hos_grado ,:NEW.hos_depen ,:NEW.hos_clinica_ingreso,:NEW.hos_medico_ingreso,:NEW.hos_clinica_egreso,:NEW.hos_medico_egreso,
+        :NEW.hos_tipo_egreso,'U' ,USER ,SYSTIMESTAMP );
     END;
     /
 
-create or replace trigger ADMIN.act_cmm_hospitalizados AFTER update on ADMIN
-    .cmm_hospitalizados 
-    
-    for each row
-    BEGIN
+CREATE OR REPLACE TRIGGER ADMIN.act_cmm_hospitalizados AFTER update on cmm_hospitalizados 
+
+ for each row
+ BEGIN
+
         
-        insert into ADMIN.aud_cmm_hospitalizados (hos_catalogo,
-    hos_fec_ingreso,hos_diag_ingreso,hos_fec_egreso,hos_diag_egreso,hos_grado,
-    hos_depen,desp_hos_catalogo,desp_hos_fec_ingreso,desp_hos_diag_ingreso,
-    desp_hos_fec_egreso,desp_hos_diag_egreso,desp_hos_grado,desp_hos_depen,
-    accion,usuario,hora)  values (:OLD.hos_catalogo ,:OLD.hos_fec_ingreso 
-    ,:OLD.hos_diag_ingreso ,:OLD.hos_fec_egreso ,:OLD.hos_diag_egreso 
-    ,:OLD.hos_grado ,:OLD.hos_depen ,:NEW.hos_catalogo ,:NEW.hos_fec_ingreso 
-    ,:NEW.hos_diag_ingreso ,:NEW.hos_fec_egreso ,:NEW.hos_diag_egreso 
-    ,:NEW.hos_grado ,:NEW.hos_depen ,'U' ,USER ,SYSTIMESTAMP);
-    END;
+        insert into aud_cmm_hospitalizados (hos_catalogo,hos_fec_ingreso,hos_diag_ingreso,hos_fec_egreso,
+        hos_diag_egreso,hos_grado,hos_depen,hos_clinica_ingreso,hos_medico_ingreso,hos_clinica_egreso,hos_medico_egreso,
+        hos_tipo_egreso,desp_hos_catalogo,desp_hos_fec_ingreso,desp_hos_diag_ingreso,desp_hos_fec_egreso,desp_hos_diag_egreso,
+        desp_hos_grado,desp_hos_depen,desp_hos_clinica_ingreso,desp_hos_medico_ingreso,desp_hos_clinica_egreso,desp_hos_medico_egreso,
+        desp_hos_tipo_egreso,accion,usuario,hora)  values (:OLD.hos_catalogo ,:OLD.hos_fec_ingreso ,:OLD.hos_diag_ingreso ,
+        :OLD.hos_fec_egreso ,:OLD.hos_diag_egreso ,:OLD.hos_grado ,:OLD.hos_depen ,:OLD.hos_clinica_ingreso,:OLD.hos_medico_ingreso,:OLD.hos_clinica_egreso,:OLD.hos_medico_egreso,
+        :OLD.hos_tipo_egreso,:NEW.hos_catalogo ,:NEW.hos_fec_ingreso ,:NEW.hos_diag_ingreso ,:NEW.hos_fec_egreso ,:NEW.hos_diag_egreso ,:NEW.hos_grado ,:NEW.hos_depen ,:NEW.hos_clinica_ingreso,:NEW.hos_medico_ingreso,:NEW.hos_clinica_egreso,:NEW.hos_medico_egreso,
+        :NEW.hos_tipo_egreso,'U' ,USER ,SYSTIMESTAMP );  
+  END;
     /
 
 create or replace trigger ADMIN.del_cmm_rebajados AFTER delete on ADMIN
@@ -2923,14 +2921,11 @@ create or replace trigger ADMIN.del_cmm_rebajados AFTER delete on ADMIN
     for each row
     BEGIN
         
-        insert into ADMIN.aud_cmm_rebajados (reb_catalogo,
-    reb_fec_inicio,reb_fec_final,reb_diagnostico,reb_tipo,reb_tiempo,
-    reb_grado,reb_depen,desp_reb_catalogo,desp_reb_fec_inicio,desp_reb_fec_final,
-    desp_reb_diagnostico,desp_reb_tipo,desp_reb_tiempo,desp_reb_grado,
-    desp_reb_depen,accion,usuario,hora)  values (:OLD.reb_catalogo ,
-    :OLD.reb_fec_inicio ,:OLD.reb_fec_final ,:OLD.reb_diagnostico 
-    ,:OLD.reb_tipo ,:OLD.reb_tiempo ,:OLD.reb_grado ,:OLD.reb_depen 
-    ,NULL ,'' ,'' ,'' ,' ' ,NULL ,NULL ,NULL ,'D' ,USER ,SYSTIMESTAMP);
+        insert into ADMIN.aud_cmm_rebajados (reb_catalogo,reb_fec_inicio,reb_fec_final,reb_diagnostico,
+        reb_tipo,reb_tiempo,reb_grado,reb_depen,reb_clinica,reb_medico,desp_reb_catalogo,desp_reb_fec_inicio,desp_reb_fec_final,
+        desp_reb_diagnostico,desp_reb_tipo,desp_reb_tiempo,desp_reb_grado,desp_reb_depen,desp_reb_clinica,desp_reb_medico,accion,usuario,hora)  
+        values (:OLD.reb_catalogo ,:OLD.reb_fec_inicio ,:OLD.reb_fec_final ,:OLD.reb_diagnostico ,:OLD.reb_tipo ,
+        :OLD.reb_tiempo ,:OLD.reb_grado ,:OLD.reb_depen ,:OLD.reb_clinica,:OLD.reb_medico,NULL ,'' ,'' ,'' ,' ' ,NULL ,NULL ,NULL ,'','','D' ,USER ,SYSTIMESTAMP ); 
     END;
     /
 
@@ -2939,34 +2934,14 @@ create or replace trigger ADMIN.ins_cmm_rebajados AFTER insert on ADMIN
     for each row
     BEGIN
         
-        insert into ADMIN.aud_cmm_rebajados (reb_catalogo,
-    reb_fec_inicio,reb_fec_final,reb_diagnostico,reb_tipo,reb_tiempo,
-    reb_grado,reb_depen,desp_reb_catalogo,desp_reb_fec_inicio,desp_reb_fec_final,
-    desp_reb_diagnostico,desp_reb_tipo,desp_reb_tiempo,desp_reb_grado,
-    desp_reb_depen,accion,usuario,hora)  values (NULL ,'' ,'' ,'' ,' ' ,NULL 
-    ,NULL ,NULL ,:NEW.reb_catalogo ,:NEW.reb_fec_inicio ,:NEW.reb_fec_final 
-    ,:NEW.reb_diagnostico ,:NEW.reb_tipo ,:NEW.reb_tiempo ,:NEW.reb_grado 
-    ,:NEW.reb_depen ,'I' ,USER ,SYSTIMESTAMP);
+        insert into ADMIN.aud_cmm_rebajados (reb_catalogo,reb_fec_inicio,reb_fec_final,reb_diagnostico,
+        reb_tipo,reb_tiempo,reb_grado,reb_depen,reb_clinica,reb_medico,desp_reb_catalogo,desp_reb_fec_inicio,desp_reb_fec_final,
+        desp_reb_diagnostico,desp_reb_tipo,desp_reb_tiempo,desp_reb_grado,desp_reb_depen,desp_reb_clinica,desp_reb_medico,accion,usuario,hora) 
+         values (NULL ,'' ,'' ,'' ,' ' ,NULL ,NULL ,NULL ,'', '',:NEW.reb_catalogo ,:NEW.reb_fec_inicio ,:NEW.reb_fec_final ,
+        :NEW.reb_diagnostico ,:NEW.reb_tipo ,:NEW.reb_tiempo ,:NEW.reb_grado ,:NEW.reb_depen ,:NEW.reb_clinica,:NEW.reb_medico,'U' ,USER ,SYSTIMESTAMP ); 
     END;
     /
 
-create or replace trigger ADMIN.act_cmm_rebajados AFTER update on ADMIN
-    .cmm_rebajados 
-    for each row
-    BEGIN
-        
-        insert into ADMIN.aud_cmm_rebajados (reb_catalogo,
-    reb_fec_inicio,reb_fec_final,reb_diagnostico,reb_tipo,reb_tiempo,
-    reb_grado,reb_depen,desp_reb_catalogo,desp_reb_fec_inicio,desp_reb_fec_final,
-    desp_reb_diagnostico,desp_reb_tipo,desp_reb_tiempo,desp_reb_grado,
-    desp_reb_depen,accion,usuario,hora)  values (:OLD.reb_catalogo ,
-    :OLD.reb_fec_inicio ,:OLD.reb_fec_final ,:OLD.reb_diagnostico 
-    ,:OLD.reb_tipo ,:OLD.reb_tiempo ,:OLD.reb_grado ,:OLD.reb_depen 
-    ,:NEW.reb_catalogo ,:NEW.reb_fec_inicio ,:NEW.reb_fec_final ,:NEW.reb_diagnostico 
-    ,:NEW.reb_tipo ,:NEW.reb_tiempo ,:NEW.reb_grado ,:NEW.reb_depen 
-    ,'U' ,USER ,SYSTIMESTAMP);
-    END;
-    /
 
 create or replace trigger ADMIN.act_mnums AFTER update on ADMIN.mnums 
     
@@ -3856,14 +3831,12 @@ create or replace trigger ADMIN.act_mdep AFTER update on ADMIN.mdep
     for each row
     BEGIN
         
-        insert into ADMIN.aud_mdep (dep_llave,dep_desc_lg,
-    dep_desc_md,dep_desc_ct,dep_clase,dep_precio,dep_ejto,desp_dep_llave,
-    desp_dep_desc_lg,desp_dep_desc_md,desp_dep_desc_ct,desp_dep_clase,
-    desp_dep_precio,desp_dep_ejto,accion,usuario,hora)  values (:OLD.dep_llave 
-    ,:OLD.dep_desc_lg ,:OLD.dep_desc_md ,:OLD.dep_desc_ct ,:OLD.dep_clase 
-    ,:OLD.dep_precio ,:OLD.dep_ejto ,:NEW.dep_llave ,:NEW.dep_desc_lg 
-    ,:NEW.dep_desc_md ,:NEW.dep_desc_ct ,:NEW.dep_clase ,:NEW.dep_precio 
-    ,:NEW.dep_ejto ,'U' ,USER ,SYSTIMESTAMP);
+        insert into ADMIN.aud_mdep (dep_llave,dep_desc_lg,dep_desc_md,dep_desc_ct,dep_clase,dep_precio,dep_ejto, dep_latitud, dep_longitud, dep_ruta_logo, dep_situacion,
+        desp_dep_llave,desp_dep_desc_lg,desp_dep_desc_md,desp_dep_desc_ct,desp_dep_clase,desp_dep_precio,desp_dep_ejto,desp_dep_latitud, desp_dep_longitud, desp_dep_ruta_logo, desp_dep_situacion,
+        accion,usuario,hora)  
+        values (:OLD.dep_llave ,:OLD.dep_desc_lg ,:OLD.dep_desc_md ,:OLD.dep_desc_ct ,:OLD.dep_clase ,:OLD.dep_precio ,:OLD.dep_ejto , :OLD.dep_latitud, :OLD.dep_longitud, :OLD.dep_ruta_logo, :OLD.dep_situacion,
+        :NEW.dep_llave ,:NEW.dep_desc_lg ,:NEW.dep_desc_md ,:NEW.dep_desc_ct ,:NEW.dep_clase ,:NEW.dep_precio ,:NEW.dep_ejto , :NEW.dep_latitud, :NEW.dep_longitud, :NEW.dep_ruta_logo, :NEW.dep_situacion,
+        'U' ,USER ,SYSTIMESTAMP );
     END;
     /
 
@@ -3871,13 +3844,12 @@ create or replace trigger ADMIN.ins_mdep AFTER insert on ADMIN.mdep
     for each row
     BEGIN
         
-        insert into ADMIN.aud_mdep (dep_llave,dep_desc_lg,
-    dep_desc_md,dep_desc_ct,dep_clase,dep_precio,dep_ejto,desp_dep_llave,
-    desp_dep_desc_lg,desp_dep_desc_md,desp_dep_desc_ct,desp_dep_clase,
-    desp_dep_precio,desp_dep_ejto,accion,usuario,hora)  values (NULL 
-    ,' ' ,' ' ,' ' ,' ' ,' ' ,' ' ,:NEW.dep_llave ,:NEW.dep_desc_lg ,:NEW.dep_desc_md 
-    ,:NEW.dep_desc_ct ,:NEW.dep_clase ,:NEW.dep_precio ,:NEW.dep_ejto 
-    ,'I' ,USER ,SYSTIMESTAMP);
+        insert into ADMIN.aud_mdep (dep_llave,dep_desc_lg,dep_desc_md,dep_desc_ct,dep_clase,dep_precio,dep_ejto, dep_latitud, dep_longitud, dep_ruta_logo, dep_situacion,
+        desp_dep_llave,
+        desp_dep_desc_lg,desp_dep_desc_md,desp_dep_desc_ct,desp_dep_clase,desp_dep_precio,desp_dep_ejto,desp_dep_latitud, desp_dep_longitud, desp_dep_ruta_logo, desp_dep_situacion,
+        accion,usuario,hora) 
+         values (NULL ,' ' ,' ' ,' ' ,' ' ,' ' ,' ' ,' ', ' ', ' ', ' ',:NEW.dep_llave ,:NEW.dep_desc_lg ,:NEW.dep_desc_md ,:NEW.dep_desc_ct ,
+         :NEW.dep_clase ,:NEW.dep_precio ,:NEW.dep_ejto ,:NEW.dep_latitud, :NEW.dep_longitud, :NEW.dep_ruta_logo, :NEW.dep_situacion,'I' ,USER ,SYSTIMESTAMP );  
     END;
     /
 
@@ -3885,13 +3857,11 @@ create or replace trigger ADMIN.del_mdep AFTER delete on ADMIN.mdep
     for each row
     BEGIN
         
-        insert into ADMIN.aud_mdep (dep_llave,dep_desc_lg,
-    dep_desc_md,dep_desc_ct,dep_clase,dep_precio,dep_ejto,desp_dep_llave,
-    desp_dep_desc_lg,desp_dep_desc_md,desp_dep_desc_ct,desp_dep_clase,
-    desp_dep_precio,desp_dep_ejto,accion,usuario,hora)  values (:OLD.dep_llave 
-    ,:OLD.dep_desc_lg ,:OLD.dep_desc_md ,:OLD.dep_desc_ct ,:OLD.dep_clase 
-    ,:OLD.dep_precio ,:OLD.dep_ejto ,NULL ,' ' ,' ' ,' ' ,' ' ,' ' ,' ' ,
-    'D' ,USER ,SYSTIMESTAMP);
+        insert into ADMIN.aud_mdep (dep_llave,dep_desc_lg,dep_desc_md,dep_desc_ct,dep_clase,dep_precio,dep_ejto, dep_latitud, dep_longitud, dep_ruta_logo, dep_situacion,
+        desp_dep_llave,desp_dep_desc_lg,desp_dep_desc_md,desp_dep_desc_ct,desp_dep_clase,desp_dep_precio,desp_dep_ejto, desp_dep_latitud, desp_dep_longitud, desp_dep_ruta_logo, desp_dep_situacion,
+        accion,usuario,hora)
+          values (:OLD.dep_llave ,:OLD.dep_desc_lg ,:OLD.dep_desc_md ,:OLD.dep_desc_ct ,:OLD.dep_clase ,:OLD.dep_precio ,:OLD.dep_ejto , :OLD.dep_latitud, :OLD.dep_longitud, :OLD.dep_ruta_logo, :OLD.dep_situacion,
+          NULL ,' ' ,' ' ,' ' ,' ' ,' ' ,' ' ,' ',' ',' ',' ','D' ,USER ,SYSTIMESTAMP );  
     END;
     /
 
